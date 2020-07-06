@@ -417,6 +417,10 @@ public class Hotel
              System.out.println("Cannot be done");
          }
     }
+    
+    public Holder getOb(){
+        return hotel_ob;
+    }
 }
 
 

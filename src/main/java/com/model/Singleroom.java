@@ -29,51 +29,30 @@ public class Singleroom implements Serializable
         return food;
     }
 
-    /**
-     * @return the name
-     */
     public String getName() {
         return name;
     }
 
-    /**
-     * @param name the name to set
-     */
     public void setName(String name) {
         this.name = name;
     }
 
-    /**
-     * @return the contact
-     */
     public String getContact() {
         return contact;
     }
 
-    /**
-     * @param contact the contact to set
-     */
     public void setContact(String contact) {
         this.contact = contact;
     }
 
-    /**
-     * @return the gender
-     */
     public String getGender() {
         return gender;
     }
 
-    /**
-     * @param gender the gender to set
-     */
     public void setGender(String gender) {
         this.gender = gender;
     }
 
-    /**
-     * @param food the food to set
-     */
     public void setFood(ArrayList<Food> food) {
         this.food = food;
     }
