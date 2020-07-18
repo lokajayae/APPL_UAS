@@ -10,6 +10,7 @@ import com.model.Customer;
 import com.model.Doubleroom;
 import com.model.Food;
 import com.model.Singleroom;
+import com.model.Spa;
 import com.utility.NotAvailable;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,9 +29,9 @@ public class HotelController {
     public final static int LUXURY_SINGLEROOM = 3;
     public final static int DELUXE_SINGLEROOM = 4;
     
-    public HotelController(Hotel hotel){
+    public HotelController(){
         sc = new Scanner(System.in);
-        this.hotel = hotel;
+        this.hotel = new Hotel();
     }
     
     public void bookRoom(int roomType){
@@ -253,7 +254,17 @@ public class HotelController {
                         String format = "%-10s%-10s%-10s%n";
                         System.out.printf(format,list[obb.getItemno()-1], obb.getQuantity(),obb.getPrice() );
                     }
-                    
+
+                    System.out.println("Spa Charges:- ");
+                    System.out.println("===============");
+                    System.out.println("Item   Quantity    Price");
+                    System.out.println("-------------------------");
+                    for(Spa obb : hotel.getHolder().getLuxury_doubleroom()[roomNumber].getSpa())
+                    {
+                        amount += obb.getPrice();
+                        String format = "%-10s%-10s%-10s%n";
+                        System.out.printf(format,list[obb.getItemno()-1], obb.getQuantity(),obb.getPrice() );
+                    }
                 break;
             case DELUXE_DOUBLEROOM:
                     amount+=300;
@@ -265,6 +276,17 @@ public class HotelController {
                     for(Food obb: hotel.getHolder().getDeluxe_doubleroom()[roomNumber].getFood())
                     {
                         amount+=obb.getPrice();
+                        String format = "%-10s%-10s%-10s%n";
+                        System.out.printf(format,list[obb.getItemno()-1], obb.getQuantity(),obb.getPrice() );
+                    }
+                    
+                    System.out.println("Spa Charges:- ");
+                    System.out.println("===============");
+                    System.out.println("Item   Quantity    Price");
+                    System.out.println("-------------------------");
+                    for(Spa obb : hotel.getHolder().getDeluxe_doubleroom()[roomNumber].getSpa())
+                    {
+                        amount += obb.getPrice();
                         String format = "%-10s%-10s%-10s%n";
                         System.out.printf(format,list[obb.getItemno()-1], obb.getQuantity(),obb.getPrice() );
                     }
@@ -282,6 +304,17 @@ public class HotelController {
                         String format = "%-10s%-10s%-10s%n";
                         System.out.printf(format,list[obb.getItemno()-1], obb.getQuantity(),obb.getPrice() );
                     }
+                    
+                    System.out.println("Spa Charges:- ");
+                    System.out.println("===============");
+                    System.out.println("Item   Quantity    Price");
+                    System.out.println("-------------------------");
+                    for(Spa obb : hotel.getHolder().getLuxury_singleroom()[roomNumber].getSpa())
+                    {
+                        amount += obb.getPrice();
+                        String format = "%-10s%-10s%-10s%n";
+                        System.out.printf(format,list[obb.getItemno()-1], obb.getQuantity(),obb.getPrice() );
+                    }
                 break;
             case DELUXE_SINGLEROOM:
                     amount+=120;
@@ -293,6 +326,17 @@ public class HotelController {
                     for(Food obb :  hotel.getHolder().getDeluxe_singleroom()[roomNumber].getFood())
                     {
                         amount+=obb.getPrice();
+                        String format = "%-10s%-10s%-10s%n";
+                        System.out.printf(format,list[obb.getItemno()-1], obb.getQuantity(),obb.getPrice() );
+                    }
+                    
+                    System.out.println("Spa Charges:- ");
+                    System.out.println("===============");
+                    System.out.println("Item   Quantity    Price");
+                    System.out.println("-------------------------");
+                    for(Spa obb : hotel.getHolder().getDeluxe_singleroom()[roomNumber].getSpa())
+                    {
+                        amount += obb.getPrice();
                         String format = "%-10s%-10s%-10s%n";
                         System.out.printf(format,list[obb.getItemno()-1], obb.getQuantity(),obb.getPrice() );
                     }
@@ -403,10 +447,10 @@ public class HotelController {
              System.out.println("\n==========\n   ");
              System.out.println("Menu:  ");
              System.out.println("==========");
-             System.out.println("1.Sandwich\tRs.50");
-             System.out.println("2.Pasta\t\tRs.60");
-             System.out.println("3.Noodles\tRs.70");
-             System.out.println("4.Coke\t\tRs.30");
+             System.out.println("1.Sandwich\t$.50");
+             System.out.println("2.Pasta\t\t$.60");
+             System.out.println("3.Noodles\t$.70");
+             System.out.println("4.Coke\t\t$.30");
              System.out.print("Choice : ");
             do
             {
@@ -441,6 +485,161 @@ public class HotelController {
         catch(Exception e){
              System.out.println("Cannot be done");
          }
+    }
+    
+    public void moveRoom(int roomNumber, int roomType) {
+    	int j;
+    	int newRoomNumber;
+    	ArrayList<Integer> emptyRoom;
+    	
+    	System.out.println("Choose New Room Number : ");
+    	
+    	switch(roomType) {
+    		case LUXURY_DOUBLEROOM :
+    			emptyRoom = getEmptyRoomList(hotel.getHolder().getLuxury_doubleroom());
+    			printRoomList(emptyRoom, 1);
+    			
+    			try{
+                    newRoomNumber = sc.nextInt();
+                    newRoomNumber--;
+                    
+                    if(hotel.getHolder().getLuxury_doubleroom()[newRoomNumber] != null) {
+                        throw new NotAvailable();
+                    }
+                    else {
+                    	hotel.getHolder().getLuxury_doubleroom()[newRoomNumber] = hotel.getHolder().getLuxury_doubleroom()[roomNumber];
+                    	hotel.getHolder().getLuxury_doubleroom()[roomNumber] = null;
+                    	System.out.println("Move Done Succesfully");
+                    }
+                    
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Invalid Option");
+                }
+    			break;
+    			
+    		case DELUXE_DOUBLEROOM :
+    			emptyRoom = getEmptyRoomList(hotel.getHolder().getDeluxe_doubleroom());
+    			printRoomList(emptyRoom, 11);
+    			
+    			try{
+                    newRoomNumber = sc.nextInt();
+                    newRoomNumber--;
+                    
+                    if(hotel.getHolder().getDeluxe_doubleroom()[newRoomNumber] != null) {
+                        throw new NotAvailable();
+                    }
+                    else {
+                    	hotel.getHolder().getDeluxe_doubleroom()[newRoomNumber] = hotel.getHolder().getDeluxe_doubleroom()[roomNumber];
+                    	hotel.getHolder().getDeluxe_doubleroom()[roomNumber] = null;
+                    	System.out.println("Move Done Succesfully");
+                    }
+                    
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Invalid Option");
+                }
+    			break;
+    			
+    		case LUXURY_SINGLEROOM :
+    			emptyRoom = getEmptyRoomList(hotel.getHolder().getLuxury_singleroom());
+    			printRoomList(emptyRoom, 31);
+    			
+    			try{
+                    newRoomNumber = sc.nextInt();
+                    newRoomNumber--;
+                    
+                    if(hotel.getHolder().getLuxury_singleroom()[newRoomNumber] != null) {
+                        throw new NotAvailable();
+                    }
+                    else {
+                    	hotel.getHolder().getLuxury_singleroom()[newRoomNumber] = hotel.getHolder().getLuxury_singleroom()[roomNumber];
+                    	hotel.getHolder().getLuxury_singleroom()[roomNumber] = null;
+                    	System.out.println("Move Done Succesfully");
+                    }
+                    
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Invalid Option");
+                }
+    			break;
+    			
+    		case DELUXE_SINGLEROOM:
+    			emptyRoom = getEmptyRoomList(hotel.getHolder().getDeluxe_singleroom());
+    			printRoomList(emptyRoom, 41);
+    			
+    			try{
+                    newRoomNumber = sc.nextInt();
+                    newRoomNumber--;
+                    
+                    if(hotel.getHolder().getDeluxe_singleroom()[newRoomNumber] != null) {
+                        throw new NotAvailable();
+                    }
+                    else {
+                    	hotel.getHolder().getDeluxe_singleroom()[newRoomNumber] = hotel.getHolder().getDeluxe_singleroom()[roomNumber];
+                    	hotel.getHolder().getDeluxe_singleroom()[roomNumber] = null;
+                    	System.out.println("Move Done Succesfully");
+                    }
+                    
+                }
+                catch(Exception e)
+                {
+                    System.out.println("Invalid Option");
+                }
+    			break;
+    	}
+    	
+    }
+    
+    public void orderSpa(int roomNumber, int roomType) {
+    	int spaPackage, quantity;
+    	char wish;
+    	
+    	try {
+            System.out.println("\n==========\n   ");
+            System.out.println("Menu:  ");
+            System.out.println("==========");
+            System.out.println("1. Single Package\t$50");
+            System.out.println("2. Double Package\t$100");
+            System.out.println("3. Special Package\t$175");
+            System.out.println("4. Full Package\t$250");
+            System.out.print("Choice : ");
+    		
+            do {
+               spaPackage = sc.nextInt();
+               System.out.print("Quantity- ");
+               quantity =sc.nextInt();
+               
+               switch(roomType) {
+               		case LUXURY_DOUBLEROOM :
+               			hotel.getHolder().getDeluxe_doubleroom()[roomNumber].getSpa().add(new Spa(spaPackage, quantity));
+               			break;
+               			
+               		case DELUXE_DOUBLEROOM :
+               			hotel.getHolder().getDeluxe_doubleroom()[roomNumber].getSpa().add(new Spa(spaPackage, quantity));
+               			break;
+               			
+               		case LUXURY_SINGLEROOM :
+               			hotel.getHolder().getLuxury_singleroom()[roomNumber].getSpa().add(new Spa(spaPackage, quantity));
+               			break;
+               			
+               		case DELUXE_SINGLEROOM :
+               			hotel.getHolder().getDeluxe_singleroom()[roomNumber].getSpa().add(new Spa(spaPackage, quantity));
+               }
+               System.out.println("Do you want to order anything else ? (y/n)");
+               wish=sc.next().charAt(0);
+    		}while(wish == 'y' || wish == 'Y');
+    	}
+        catch(NullPointerException e){
+            System.out.println("\nRoom not booked");
+        }
+    
+	    catch(Exception e){
+	         System.out.println("Cannot be done");
+	     }
     }
     
     private ArrayList<Integer> getEmptyRoomList(Singleroom room[]){

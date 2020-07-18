@@ -15,7 +15,9 @@ public class Application {
         private static final int BOOK_ROOM = 3;
         private static final int ORDER_FOOD = 4;
         private static final int CHECKOUT = 5;
-        private static final int EXIT = 6;
+        private static final int MOVE_ROOM = 6;
+        private static final int SPA = 7;
+        private static final int EXIT = 10;
         
         static Scanner sc;
     public static void main(String[] args){
@@ -26,10 +28,9 @@ public class Application {
         int[] room;
         boolean exit = false;
         
-        try{           
-            hotel = new Hotel();
+        try{
             sc = new Scanner(System.in);
-            hotelController = new HotelController(hotel);
+            hotelController = new HotelController();
         do{
             printMenu();
             choiceMenu = sc.nextInt();
@@ -61,7 +62,16 @@ public class Application {
                     room = getRoomNumberInput();
                     hotelController.checkOut(room[0], room[1]);
                     break;
-                    
+                
+                case MOVE_ROOM:
+                	room = getRoomNumberInput();
+                	hotelController.moveRoom(room[0], room[1]);
+                	break;
+                	
+                case SPA:
+                	room = getRoomNumberInput();
+                	hotelController.orderSpa(room[0], room[1]);
+                	
                 case EXIT:
                     exit = true;
                     break;
@@ -86,12 +96,12 @@ public class Application {
     
     static private void printMenu(){
         System.out.println("\nMENU :");
-        System.out.println("1.Display room details:");
-        System.out.println("2.Display room availability");
-        System.out.println("3.Book");
-        System.out.println("4.Order food");
-        System.out.println("5. Checkout");
-        System.out.println("6.Exit");
+        System.out.println(ROOM_DETAILS+".Display room details:");
+        System.out.println(ROOM_AVAILABILITY+".Display room availability");
+        System.out.println(BOOK_ROOM+".Book");
+        System.out.println(ORDER_FOOD+".Order food");
+        System.out.println(CHECKOUT+". Checkout");
+        System.out.println(EXIT+".Exit");
         System.out.print("Choice : ");
     }
     

@@ -9,7 +9,7 @@ public class Singleroom implements Serializable
 {
     private Customer customer;  
     private ArrayList<Food> food =new ArrayList<>();
-
+    private ArrayList<Spa> spa = new ArrayList<>();
    
     public Singleroom()
     {
@@ -35,5 +35,9 @@ public class Singleroom implements Serializable
 
     public void setFood(ArrayList<Food> food) {
         this.food = food;
+    }
+    
+    public ArrayList<Spa> getSpa(){
+    	return this.spa;
     }
 }
